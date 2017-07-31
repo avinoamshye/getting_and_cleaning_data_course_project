@@ -2,6 +2,7 @@
 
 This codebook contains information about the R script "run_analysis.R" found here.
 The script assumes data was already downloaded and extracted, and that the correct folder is found in the working directory.
+It also assumes that the dplyr library is installed.
 Description fo data is available at: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones.
 Data source: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip.
 
