@@ -1,4 +1,4 @@
-#CodeBook
+# CodeBook
 
 This codebook contains information about the R script "run_analysis.R" found here.
 The script assumes data was already downloaded and extracted, and that the correct folder is found in the working directory.
