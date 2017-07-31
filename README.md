@@ -6,3 +6,5 @@ Next, test and train datasets are combined, columns are given names, and subject
 Activity numeric values are replaced with discriptive strings.
 Using aggregate() the data is grouped by subjects and activities and means are calculated for each column.
 Lastly, all unnecessary variables are deleated leaving only x and x_means _, and write it to a file namedstep_5.txt.
+
+Required package: the script requires dplyr package to bo pre-installed
