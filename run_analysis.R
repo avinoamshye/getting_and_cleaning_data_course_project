@@ -7,15 +7,15 @@
 #5. From the data set in step 4, creates a second, independent tidy data set with the
 #    average of each variable for each activity and each subject.
 
-# if(!file.exists("./data")){dir.create("./data")}
-# fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-# if(!file.exists("./data/fuci.zip")){download.file(fileURL, "./data/fuci.zip")}
-# unzip("./data/fuci.zip")}
-
-if(!file.exists("./UCI HAR Dataset")){print("please download and extract required data and make sure the folder is located in working directory");break()}
-
 library(dplyr)
 
+#checks if data exist in wd. If not, they are downloaded and extracted
+if(!file.exists("./data")){dir.create("./data")}
+fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+if(!file.exists("./data/fuci.zip")){download.file(fileURL, "./data/fuci.zip")}
+if(!file.exists("./UCI HAR Dataset")){unzip("./data/fuci.zip")}
+
+# reading all data files to data.frames
 activity_labels <- tbl_df(read.table("./UCI HAR Dataset/activity_labels.txt"))
 features <- tbl_df(read.table("./UCI HAR Dataset/features.txt"))
 subject_test <- tbl_df(read.table("./UCI HAR Dataset/test/subject_test.txt"))
@@ -25,6 +25,7 @@ subject_train <- tbl_df(read.table("./UCI HAR Dataset/train/subject_train.txt"))
 xtrain <- tbl_df(read.table("./UCI HAR Dataset/train/X_train.txt"))
 ytrain <- tbl_df(read.table("./UCI HAR Dataset/train/y_train.txt"))
 
+#combining test and train data, adding measurement names and subject and activity columns.
 xdata <- tbl_df(bind_rows(xtest,xtrain))
 feats <- c(as.character(features$V2))
 feats <- gsub("[(,)]", "-", feats)
@@ -43,9 +44,13 @@ xdata2 <- select(xdata1,contains("mean"))
 xdata3 <- select(xdata1,contains("std"))
 x <- cbind(xsubject,xactivity,xdata2,xdata3)
 
+#replacing activity numerals with informative strings
 for(i in c(1:6)){x$activity[x$activity == i] <- as.character(activity_labels$V2[activity_labels$V1 == i])}
 
+#creating a summarized tidy dataset
 measurment_names <- names(x)[3:length(x)]
 x_means <- aggregate(x[measurment_names],by = x[c("subject","activity")],FUN = mean)
+#removing all unnecessary data
 rm(activity_labels,features,subject_test,subject_train,xactivity,xdata,xdata1,xdata2,xdata3,xsubject,xtest,ytest,xtrain,ytrain,feats,fileURL,i,measurment_names)
+#creating a file for submission
 write.table(x_means,"step_5.txt", row.names = FALSE)
