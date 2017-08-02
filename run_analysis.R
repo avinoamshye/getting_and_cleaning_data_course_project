@@ -9,13 +9,13 @@
 
 library(dplyr)
 
-#checks if data exist in wd. If not, they are downloaded and extracted
+#checks if data exist in wd. If not, they are downloaded and extracted in working directory
 if(!file.exists("./data")){dir.create("./data")}
 fileURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 if(!file.exists("./data/fuci.zip")){download.file(fileURL, "./data/fuci.zip")}
 if(!file.exists("./UCI HAR Dataset")){unzip("./data/fuci.zip")}
 
-# reading all data files to data.frames
+# reading all 8 data and label files to data.frames
 activity_labels <- tbl_df(read.table("./UCI HAR Dataset/activity_labels.txt"))
 features <- tbl_df(read.table("./UCI HAR Dataset/features.txt"))
 subject_test <- tbl_df(read.table("./UCI HAR Dataset/test/subject_test.txt"))
